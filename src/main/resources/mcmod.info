@@ -1,0 +1,20 @@
+[
+  {
+    "modid": "storyoflife",
+    "name": "Storyoflife",
+    "description": "Story of Life mod",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/StoryOfLife/StoryOfLife",
+    "updateUrl": "",
+    "authorList": [
+      ""
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": [
+      ""
+    ]
+  }
+]
