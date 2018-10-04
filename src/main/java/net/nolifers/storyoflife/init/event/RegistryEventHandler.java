@@ -2,6 +2,7 @@ package net.nolifers.storyoflife.init.event;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,4 +29,10 @@ public class RegistryEventHandler {
     public static void addBlocks(RegistryEvent.Register<Block> event) {
 
     }
+
+
+    static ItemBlock createBasicItemBlock(Block b){
+        return (ItemBlock)(new ItemBlock(b).setRegistryName(b.getRegistryName()));
+    }
+
 }
