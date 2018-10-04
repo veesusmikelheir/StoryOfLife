@@ -1,16 +1,11 @@
 package net.nolifers.storyoflife.init;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.event.RegistryEvent;
-import net.nolifers.storyoflife.init.proxy.IProxy;
+import net.nolifers.storyoflife.IProxy;
 
 
 @Mod(
@@ -27,7 +22,7 @@ public class StoryofLife {
     @Mod.Instance(MOD_ID)
     public static StoryofLife INSTANCE;
 
-    @SidedProxy(clientSide = "net.nolifers.storyoflife.init.proxy.ClientProxy",serverSide = "net.nolifers.storyoflife.init.proxy.ServerProxy")
+    @SidedProxy(clientSide = "net.nolifers.storyoflife.client.ClientProxy",serverSide = "net.nolifers.storyoflife.server.ServerProxy")
     public static IProxy proxy;
 
     @Mod.EventHandler

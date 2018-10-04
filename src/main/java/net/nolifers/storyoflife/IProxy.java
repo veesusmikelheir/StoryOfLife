@@ -1,4 +1,4 @@
-package net.nolifers.storyoflife.init.proxy;
+package net.nolifers.storyoflife;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
