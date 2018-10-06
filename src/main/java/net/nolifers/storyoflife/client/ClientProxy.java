@@ -31,10 +31,6 @@ public class ClientProxy implements IProxy {
     public void init(FMLInitializationEvent event) {
     }
 
-    @Override
-    public void postinit(FMLPostInitializationEvent event) {
-
-    }
 
     @SubscribeEvent
     public static void registerItemModels(ModelRegistryEvent event){

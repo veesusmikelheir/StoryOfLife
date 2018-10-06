@@ -1,13 +1,19 @@
 package net.nolifers.storyoflife.event;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Biomes;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.nolifers.storyoflife.StoryofLife;
+import net.nolifers.storyoflife.entity.EntityWildebeast;
 
 /**
  * This is a special class that listens to registry events, to allow creation of mod blocks and items at the proper time.
@@ -33,7 +39,17 @@ public class RegistryEventHandler {
 
     @SubscribeEvent
     public static void addEntities(RegistryEvent.Register<EntityEntry> event){
-
+        int EntityID= 0;
+        event.getRegistry().registerAll(
+                EntityEntryBuilder.create()
+                .entity(EntityWildebeast.class)
+                .id(new ResourceLocation(StoryofLife.MOD_ID,"wildebeast"),EntityID++)
+                .name(StoryofLife.MOD_ID+".wildebeast")
+                .tracker(16,3,true)
+                .egg(0,0).
+                        spawn(EnumCreatureType.CREATURE,50,5,8, new Biome[]{Biomes.SAVANNA,Biomes.MUTATED_SAVANNA,Biomes.SAVANNA_PLATEAU})
+                .build()
+                );
     }
 
     static ItemBlock createBasicItemBlock(Block b){

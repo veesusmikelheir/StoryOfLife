@@ -40,7 +40,6 @@ public class StoryofLife {
     @Mod.EventHandler
     public void postinit(FMLPostInitializationEvent event)
     {
-        proxy.postinit(event);
     }
 
 }

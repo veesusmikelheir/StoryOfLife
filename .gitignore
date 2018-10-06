@@ -5,3 +5,5 @@
 /.gradle
 StoryOfLife.iml
 /classes
+/build
+
