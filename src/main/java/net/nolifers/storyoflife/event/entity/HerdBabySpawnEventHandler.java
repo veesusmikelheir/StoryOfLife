@@ -12,7 +12,7 @@ public class HerdBabySpawnEventHandler {
     public static void makeBaby(LivingSpawnEvent.CheckSpawn event){
         if(event.getEntityLiving() instanceof EntityWildebeast){
             EntityWildebeast beast = (EntityWildebeast)event.getEntityLiving();
-            if(beast.world.rand.nextInt(4)==0){
+            if(beast.world.rand.nextInt(2)==0){
                 beast.setGrowingAge(-24000);
             }
         }

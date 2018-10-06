@@ -45,9 +45,9 @@ public class RegistryEventHandler {
                 .entity(EntityWildebeast.class)
                 .id(new ResourceLocation(StoryofLife.MOD_ID,"wildebeast"),EntityID++)
                 .name(StoryofLife.MOD_ID+".wildebeast")
-                .tracker(16,3,true)
+                .tracker(64,3,true)
                 .egg(0,0).
-                        spawn(EnumCreatureType.CREATURE,50,5,8, new Biome[]{Biomes.SAVANNA,Biomes.MUTATED_SAVANNA,Biomes.SAVANNA_PLATEAU})
+                        spawn(EnumCreatureType.CREATURE,14,5,8, new Biome[]{Biomes.SAVANNA,Biomes.MUTATED_SAVANNA,Biomes.SAVANNA_PLATEAU})
                 .build()
                 );
     }
