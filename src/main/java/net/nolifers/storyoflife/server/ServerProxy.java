@@ -16,8 +16,4 @@ public class ServerProxy implements IProxy {
 
     }
 
-    @Override
-    public void postinit(FMLPostInitializationEvent event) {
-
-    }
 }

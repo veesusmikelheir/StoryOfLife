@@ -1,4 +1,4 @@
-package net.nolifers.storyoflife.init;
+package net.nolifers.storyoflife;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -26,17 +26,20 @@ public class StoryofLife {
     public static IProxy proxy;
 
     @Mod.EventHandler
-    public void preinit(FMLPreInitializationEvent event) {
+    public void preinit(FMLPreInitializationEvent event)
+    {
         proxy.preinit(event);
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event)
+    {
         proxy.init(event);
     }
 
     @Mod.EventHandler
-    public void postinit(FMLPostInitializationEvent event) {
+    public void postinit(FMLPostInitializationEvent event)
+    {
         proxy.postinit(event);
     }
 

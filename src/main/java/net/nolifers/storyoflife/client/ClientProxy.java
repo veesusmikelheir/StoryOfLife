@@ -17,18 +17,18 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.nolifers.storyoflife.IProxy;
-import net.nolifers.storyoflife.init.StoryofLife;
+import net.nolifers.storyoflife.client.render.ModRenders;
+import net.nolifers.storyoflife.StoryofLife;
 
-@SideOnly(Side.CLIENT)
+@Mod.EventBusSubscriber(modid=StoryofLife.MOD_ID)
 public class ClientProxy implements IProxy {
     @Override
     public void preinit(FMLPreInitializationEvent event) {
-
+        ModRenders.registerRenders();
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ClientProxy implements IProxy {
     }
 
     @SubscribeEvent
-    public void registerModels(ModelRegistryEvent event){
+    public static void registerItemModels(ModelRegistryEvent event){
 
     }
     static Item getItemBlockForBlock(Block b){

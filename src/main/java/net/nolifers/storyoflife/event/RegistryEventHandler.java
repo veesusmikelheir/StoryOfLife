@@ -1,4 +1,4 @@
-package net.nolifers.storyoflife.init.event;
+package net.nolifers.storyoflife.event;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -6,7 +6,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.nolifers.storyoflife.init.StoryofLife;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.nolifers.storyoflife.StoryofLife;
 
 /**
  * This is a special class that listens to registry events, to allow creation of mod blocks and items at the proper time.
@@ -30,6 +31,10 @@ public class RegistryEventHandler {
 
     }
 
+    @SubscribeEvent
+    public static void addEntities(RegistryEvent.Register<EntityEntry> event){
+
+    }
 
     static ItemBlock createBasicItemBlock(Block b){
         return (ItemBlock)(new ItemBlock(b).setRegistryName(b.getRegistryName()));
