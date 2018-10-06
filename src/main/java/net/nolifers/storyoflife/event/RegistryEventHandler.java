@@ -3,6 +3,7 @@ package net.nolifers.storyoflife.event;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.nolifers.storyoflife.StoryofLife;
 import net.nolifers.storyoflife.entity.EntityWildebeast;
 
@@ -52,8 +54,20 @@ public class RegistryEventHandler {
                 );
     }
 
+    @SubscribeEvent
+    public static void addSounds(RegistryEvent.Register<SoundEvent> event){
+
+        ForgeRegistries.SOUND_EVENTS.registerAll(
+            createSoundEvent("wildebeast_ambient")
+        );
+    }
+
     static ItemBlock createBasicItemBlock(Block b){
         return (ItemBlock)(new ItemBlock(b).setRegistryName(b.getRegistryName()));
+    }
+
+    static SoundEvent createSoundEvent(String name){
+        return new SoundEvent(new ResourceLocation(StoryofLife.MOD_ID,name)).setRegistryName(StoryofLife.MOD_ID,name);
     }
 
 }

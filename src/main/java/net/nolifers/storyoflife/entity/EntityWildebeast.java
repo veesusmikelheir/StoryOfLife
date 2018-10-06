@@ -1,23 +1,28 @@
 package net.nolifers.storyoflife.entity;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.nolifers.storyoflife.StoryofLife;
+import net.nolifers.storyoflife.init.ModSounds;
 
 import javax.annotation.Nullable;
 
@@ -39,7 +44,7 @@ public class EntityWildebeast extends EntityAnimal {
         this.tasks.addTask(1, new EntityAIPanic(this, 2));
         this.tasks.addTask(2, new EntityAIMate(this, 1));
         this.tasks.addTask(3, new EntityAITempt(this, 1.25, Items.WHEAT, false));
-        this.tasks.addTask(3, new EntityAITempt(this, 1, new ItemStack(Blocks.TALLGRASS,1).getItem(), false));
+        this.tasks.addTask(3, new EntityAITempt(this, 1, ItemBlock.getItemFromBlock(Blocks.TALLGRASS), false));
         EntityAIFollowParent ai = new EntityAIFollowParent(this, 1.1);
         ai.setMutexBits(1);
         this.tasks.addTask(4, ai);
@@ -54,6 +59,21 @@ public class EntityWildebeast extends EntityAnimal {
     {
         this.grassEatTimer = this.grassEatAI.getEatingGrassTimer();
         super.updateAITasks();
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound(){
+        return ModSounds.WILDEBEAST_AMBIENT;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, Block blockIn) {
+        this.playSound(SoundEvents.ENTITY_COW_STEP, 0.15F, 1.0F);
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 0.4F;
     }
 
     @Override

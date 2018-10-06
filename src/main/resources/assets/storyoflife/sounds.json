@@ -1,0 +1,9 @@
+{
+  "wildebeast_ambient":{
+    "category":"entity",
+    "subtitle":"subtitle.storyoflife.wildebeast.ambient",
+    "sounds":[
+      "storyoflife:entities/wildebeast_bleat"
+    ]
+  }
+}
