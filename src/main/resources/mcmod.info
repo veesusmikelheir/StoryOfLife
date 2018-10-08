@@ -4,17 +4,16 @@
     "name": "Storyoflife",
     "description": "Story of Life mod",
     "version": "${version}",
-    "mcversion": "${mcversion}",
+    "mcversion": "1.12.2",
     "url": "https://github.com/StoryOfLife/StoryOfLife",
     "updateUrl": "",
     "authorList": [
-      ""
+      "veesus mikel here",
+      "Anomalocaris101",
+      "DinosawrBirb"
     ],
     "credits": "",
     "logoFile": "",
-    "screenshots": [],
-    "dependencies": [
-      ""
-    ]
+    "screenshots": []
   }
 ]

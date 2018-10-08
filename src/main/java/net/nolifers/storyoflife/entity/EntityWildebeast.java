@@ -22,13 +22,16 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.nolifers.storyoflife.StoryofLife;
+import net.nolifers.storyoflife.entity.ai.EntityAIFollowHerd;
+import net.nolifers.storyoflife.entity.ai.EntityAILongRangeFollowParent;
+import net.nolifers.storyoflife.entity.ai.IHerdable;
 import net.nolifers.storyoflife.init.ModSounds;
 
 import javax.annotation.Nullable;
 
-public class EntityWildebeast extends EntityAnimal {
+public class EntityWildebeast extends EntityAnimal implements IHerdable {
 
-
+    EntityAIFollowHerd herd;
     EntityAIEatGrass grassEatAI;
     int grassEatTimer;
     public EntityWildebeast(World worldIn) {
@@ -45,13 +48,15 @@ public class EntityWildebeast extends EntityAnimal {
         this.tasks.addTask(2, new EntityAIMate(this, 1));
         this.tasks.addTask(3, new EntityAITempt(this, 1.25, Items.WHEAT, false));
         this.tasks.addTask(3, new EntityAITempt(this, 1, ItemBlock.getItemFromBlock(Blocks.TALLGRASS), false));
-        EntityAIFollowParent ai = new EntityAIFollowParent(this, 1.1);
+        EntityAILongRangeFollowParent ai = new EntityAILongRangeFollowParent(this, 1.1);
         ai.setMutexBits(1);
         this.tasks.addTask(4, ai);
-        this.tasks.addTask(5, this.grassEatAI);
-        this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 1));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
+        herd=new EntityAIFollowHerd(this,1.1f);
+        this.tasks.addTask(2, herd);
+        this.tasks.addTask(6, this.grassEatAI);
+        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(9, new EntityAILookIdle(this));
     }
 
     @Override
@@ -60,6 +65,7 @@ public class EntityWildebeast extends EntityAnimal {
         this.grassEatTimer = this.grassEatAI.getEatingGrassTimer();
         super.updateAITasks();
     }
+
 
     @Override
     protected SoundEvent getAmbientSound(){
@@ -168,4 +174,13 @@ public class EntityWildebeast extends EntityAnimal {
         }
     }
 
+    @Override
+    public EntityAnimal getEntity() {
+        return this;
+    }
+
+    @Override
+    public void setHerdingOverride(IHerdable target) {
+        herd.enableOverride(target);
+    }
 }
