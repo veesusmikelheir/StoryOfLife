@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.nolifers.storyoflife.StoryofLife;
 import net.nolifers.storyoflife.entity.EntityJellyfish;
@@ -68,6 +67,15 @@ public class RegistryEventHandler {
         EntitySpawnPlacementRegistry.setPlacementType(EntityJellyfish.class, EntityLiving.SpawnPlacementType.IN_WATER);
     }
 
+
+    @SubscribeEvent
+    public static void missingMappingsEntity(RegistryEvent.MissingMappings<EntityEntry> event){
+        for(RegistryEvent.MissingMappings.Mapping mapping : event.getMappings()){
+            if(mapping.key.toString().equals("storyoflife:wildebeast")){
+                mapping.remap(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(StoryofLife.MOD_ID,"wildebeest")));
+            }
+        }
+    }
     @SubscribeEvent
     public static void addSounds(RegistryEvent.Register<SoundEvent> event){
 
