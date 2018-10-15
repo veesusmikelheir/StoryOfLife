@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.nolifers.storyoflife.StoryofLife;
-import net.nolifers.storyoflife.client.render.entity.model.ModelWildebeast;
+import net.nolifers.storyoflife.client.render.entity.model.ModelWildebeest;
 import net.nolifers.storyoflife.entity.EntityWildebeest;
 
 import javax.annotation.Nullable;
@@ -24,7 +24,7 @@ public class RenderWildebeest extends RenderLiving<EntityWildebeest> {
     @Nullable
     @Override
     protected ResourceLocation getEntityTexture(EntityWildebeest entity) {
-        return new ResourceLocation(StoryofLife.MOD_ID,"textures/entity/wildebeast.png");
+        return new ResourceLocation(StoryofLife.MOD_ID,"textures/entity/wildebeest.png");
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RenderWildebeest extends RenderLiving<EntityWildebeest> {
         @SuppressWarnings("unchecked")
         @Override
         public Render createRenderFor(RenderManager manager) {
-            return new RenderWildebeest(manager,new ModelWildebeast(),.7f);
+            return new RenderWildebeest(manager,new ModelWildebeest(),.7f);
         }
     }
 

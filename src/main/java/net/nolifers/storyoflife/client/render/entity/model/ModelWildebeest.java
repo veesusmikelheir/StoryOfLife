@@ -13,7 +13,7 @@ import net.nolifers.storyoflife.entity.EntityWildebeest;
  * Wildebeest - Anomalocaris101
  * Created using Tabula 7.0.0
  */
-public class ModelWildebeast extends ModelQuadruped {
+public class ModelWildebeest extends ModelQuadruped {
     ModelRenderer Body;
     ModelRenderer Leg1;
     ModelRenderer Leg2;
@@ -30,7 +30,7 @@ public class ModelWildebeast extends ModelQuadruped {
     ModelRenderer Horn2_1;
 
     float headRotationAngleX;
-    public ModelWildebeast() {
+    public ModelWildebeest() {
         super(12,0f);
         this.textureWidth = 128;
         this.textureHeight = 64;

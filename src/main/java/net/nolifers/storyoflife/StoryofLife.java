@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.nolifers.storyoflife.IProxy;
+import net.nolifers.storyoflife.init.ModDataFixers;
 import org.apache.logging.log4j.Logger;
 
 
@@ -32,7 +33,7 @@ public class StoryofLife {
     public void preinit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
-
+        ModDataFixers.registerFixes();
         proxy.preinit(event);
     }
 

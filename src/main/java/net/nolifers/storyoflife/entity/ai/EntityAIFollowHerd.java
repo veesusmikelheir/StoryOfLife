@@ -2,11 +2,8 @@ package net.nolifers.storyoflife.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.nolifers.storyoflife.StoryofLife;
-import net.nolifers.storyoflife.entity.EntityWildebeast;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 public class EntityAIFollowHerd extends EntityAIBase {
 
