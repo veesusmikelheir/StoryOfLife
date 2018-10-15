@@ -1,6 +1,8 @@
 package net.nolifers.storyoflife.event;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.SoundEvent;
@@ -13,9 +15,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.nolifers.storyoflife.StoryofLife;
-import net.nolifers.storyoflife.entity.EntityWildebeast;
+import net.nolifers.storyoflife.entity.EntityJellyfish;
+import net.nolifers.storyoflife.entity.EntityWildebeest;
 
 /**
  * This is a special class that listens to registry events, to allow creation of mod blocks and items at the proper time.
@@ -44,14 +48,24 @@ public class RegistryEventHandler {
         int EntityID= 0;
         event.getRegistry().registerAll(
                 EntityEntryBuilder.create()
-                .entity(EntityWildebeast.class)
-                .id(new ResourceLocation(StoryofLife.MOD_ID,"wildebeast"),EntityID++)
-                .name(StoryofLife.MOD_ID+".wildebeast")
+                .entity(EntityWildebeest.class)
+                .id(new ResourceLocation(StoryofLife.MOD_ID,"wildebeest"),EntityID++)
+                .name(StoryofLife.MOD_ID+".wildebeest")
                 .tracker(64,3,true)
                 .egg(0,0).
                         spawn(EnumCreatureType.CREATURE,14,5,8, new Biome[]{Biomes.SAVANNA,Biomes.MUTATED_SAVANNA,Biomes.SAVANNA_PLATEAU})
+                .build(),
+                EntityEntryBuilder.create()
+                .entity(EntityJellyfish.class)
+                .id(new ResourceLocation(StoryofLife.MOD_ID,"jellyfish"),EntityID++)
+                .name(StoryofLife.MOD_ID+".jellyfish")
+                .tracker(32,3,true)
+                .egg(0,0)
+                .spawn(EnumCreatureType.WATER_CREATURE,3,1,3,Biomes.DEEP_OCEAN)
+
                 .build()
                 );
+        EntitySpawnPlacementRegistry.setPlacementType(EntityJellyfish.class, EntityLiving.SpawnPlacementType.IN_WATER);
     }
 
     @SubscribeEvent
