@@ -29,12 +29,12 @@ import net.nolifers.storyoflife.init.ModSounds;
 
 import javax.annotation.Nullable;
 
-public class EntityWildebeast extends EntityAnimal implements IHerdable {
+public class EntityWildebeest extends EntityAnimal implements IHerdable {
 
     EntityAIFollowHerd herd;
     EntityAIEatGrass grassEatAI;
     int grassEatTimer;
-    public EntityWildebeast(World worldIn) {
+    public EntityWildebeest(World worldIn) {
         super(worldIn);
         this.setSize(0.9F, 1.4F);
 
@@ -69,7 +69,7 @@ public class EntityWildebeast extends EntityAnimal implements IHerdable {
 
     @Override
     protected SoundEvent getAmbientSound(){
-        return ModSounds.WILDEBEAST_AMBIENT;
+        return ModSounds.WILDEBEEST_AMBIENT;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class EntityWildebeast extends EntityAnimal implements IHerdable {
         if(!result) return false;
         Entity ent = source.getTrueSource();
         if(ent instanceof EntityLivingBase){
-            for(Entity b : this.world.getEntitiesInAABBexcluding(this,new AxisAlignedBB(this.posX-5,this.posY,this.posZ-5,this.posX+5,this.posY+2,this.posZ+5),x->x instanceof EntityWildebeast)){
+            for(Entity b : this.world.getEntitiesInAABBexcluding(this,new AxisAlignedBB(this.posX-5,this.posY,this.posZ-5,this.posX+5,this.posY+2,this.posZ+5),x->x instanceof EntityWildebeest)){
                 ((EntityLivingBase)b).setRevengeTarget(this.getRevengeTarget());
             }
         }
@@ -128,7 +128,7 @@ public class EntityWildebeast extends EntityAnimal implements IHerdable {
     @Nullable
     @Override
     public EntityAgeable createChild(EntityAgeable ageable) {
-        return new EntityWildebeast(this.world);
+        return new EntityWildebeest(this.world);
     }
 
     @SideOnly(Side.CLIENT)

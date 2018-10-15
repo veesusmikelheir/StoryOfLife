@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySheep;
-import net.nolifers.storyoflife.entity.EntityWildebeast;
+import net.nolifers.storyoflife.entity.EntityWildebeest;
 
 /**
  * Wildebeest - Anomalocaris101
@@ -125,8 +125,8 @@ public class ModelWildebeast extends ModelQuadruped {
     public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime)
     {
         super.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTickTime);
-        this.Head.rotationPointY = -1 + ((EntityWildebeast)entitylivingbaseIn).getHeadRotationPointY(partialTickTime) * 5.0F;
-        this.headRotationAngleX = ((EntityWildebeast)entitylivingbaseIn).getHeadRotationAngleX(partialTickTime);
+        this.Head.rotationPointY = -1 + ((EntityWildebeest)entitylivingbaseIn).getHeadRotationPointY(partialTickTime) * 5.0F;
+        this.headRotationAngleX = ((EntityWildebeest)entitylivingbaseIn).getHeadRotationAngleX(partialTickTime);
     }
 
     @Override
