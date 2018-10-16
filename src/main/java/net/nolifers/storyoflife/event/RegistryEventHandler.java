@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.nolifers.storyoflife.StoryofLife;
 import net.nolifers.storyoflife.entity.EntityJellyfish;
+import net.nolifers.storyoflife.entity.EntitySmallSnake;
 import net.nolifers.storyoflife.entity.EntityWildebeest;
 
 /**
@@ -62,6 +63,13 @@ public class RegistryEventHandler {
                 .egg(0,0)
                 .spawn(EnumCreatureType.WATER_CREATURE,3,1,3,Biomes.DEEP_OCEAN)
 
+                .build(),
+                EntityEntryBuilder.create()
+                .entity(EntitySmallSnake.class)
+                .id(new ResourceLocation(StoryofLife.MOD_ID,"smallsnake"),EntityID++)
+                .name(StoryofLife.MOD_ID+".smallsnake")
+                .tracker(48,3,true)
+                .egg(0,0)
                 .build()
                 );
         EntitySpawnPlacementRegistry.setPlacementType(EntityJellyfish.class, EntityLiving.SpawnPlacementType.IN_WATER);
