@@ -30,7 +30,7 @@ public class RenderJellyfish extends RenderLiving<EntityJellyfish> {
     @Override
     public void doRender(EntityJellyfish entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.enableBlend();
-        GlStateManager.enableAlpha();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
         GlStateManager.disableBlend();
 

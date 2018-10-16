@@ -44,6 +44,7 @@ public class EntityJellyfish extends EntityWaterMob {
     @Override
     protected void collideWithEntity(Entity entityIn) {
         super.collideWithEntity(entityIn);
+        if(world.isRemote) return;
         if(entityIn instanceof EntityLivingBase&&!(entityIn instanceof EntityJellyfish)){
             ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.POISON,20*(int)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue()));
         }
@@ -103,6 +104,25 @@ public class EntityJellyfish extends EntityWaterMob {
             prevJellyPitch=jellyPitch;
             float val = (float)-MathHelper.atan2((double) f1, this.motionY) * (180F / (float) Math.PI)*f2;
             this.jellyPitch += ((val-this.jellyPitch)*.1f);
+        }
+        else{
+            if (!this.world.isRemote)
+            {
+                this.motionX = 0.0D;
+                this.motionZ = 0.0D;
+
+                if (this.isPotionActive(MobEffects.LEVITATION))
+                {
+                    this.motionY += 0.05D * (double)(this.getActivePotionEffect(MobEffects.LEVITATION).getAmplifier() + 1) - this.motionY;
+                }
+                else if (!this.hasNoGravity())
+                {
+                    this.motionY -= 0.08D;
+                }
+
+                this.motionY *= 0.9800000190734863D;
+            }
+            this.jellyPitch=0;
         }
     }
 
