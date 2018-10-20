@@ -70,7 +70,7 @@ public class RegistryEventHandler {
                 .name(StoryofLife.MOD_ID+".smallsnake")
                 .tracker(48,3,true)
                 .egg(0,0)
-                .spawn(EnumCreatureType.CREATURE,150,2,4,Biomes.SAVANNA,Biomes.SAVANNA_PLATEAU,Biomes.MUTATED_SAVANNA,Biomes.PLAINS,Biomes.MUTATED_PLAINS)
+                .spawn(EnumCreatureType.CREATURE,15,2,4,Biomes.SAVANNA,Biomes.SAVANNA_PLATEAU,Biomes.MUTATED_SAVANNA,Biomes.PLAINS,Biomes.MUTATED_PLAINS)
                 .build()
                 );
         EntitySpawnPlacementRegistry.setPlacementType(EntityJellyfish.class, EntityLiving.SpawnPlacementType.IN_WATER);
