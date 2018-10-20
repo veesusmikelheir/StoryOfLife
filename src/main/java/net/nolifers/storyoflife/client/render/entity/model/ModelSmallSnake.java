@@ -47,7 +47,7 @@ public class ModelSmallSnake extends ModelSegmented {
         this.Segment1.addBox(-1.5F, 0, 0.0F, 3, 2, 4, 0.0F);
         this.Tounge = new ModelRenderer(this, 9, 1);
         this.Tounge.setRotationPoint(0.0F, 0.0F, -4.0F);
-        this.Tounge.addBox(-1.5F, 0.0F, -3.0F, 3, 0, 3, 0.0F);
+        this.Tounge.addBox(-1.5F, 1F, -3.0F, 3, 0, 3, 0.0F);
         this.Segment5 = new ModelRenderer(this, 0, 7);
         this.Segment5.setRotationPoint(0.0F, 0.0F, 4.0F);
         this.Segment5.addBox(-1.5F, 0, 0.0F, 3, 2, 4, 0.0F);
