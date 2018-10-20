@@ -56,6 +56,7 @@ public class EntityAIFollowHerd extends EntityAIBase {
         curDist = 0;
 
         entityCount=list.size();
+
         EntityAnimal curanimal=null;
         for(EntityAnimal a : list){
             if(a.getLeashed()) {
@@ -68,6 +69,7 @@ public class EntityAIFollowHerd extends EntityAIBase {
                 curanimal=a;
             }
         }
+        if(entityCount<0) entityCount=0;
         return (IHerdable)curanimal;
     }
 

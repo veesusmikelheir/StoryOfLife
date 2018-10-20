@@ -3,7 +3,7 @@
     "modid": "storyoflife",
     "name": "Storyoflife",
     "description": "Story of Life mod",
-    "version": "0.0.2",
+    "version": "${version}",
     "mcversion": "1.12.2",
     "url": "https://github.com/StoryOfLife/StoryOfLife",
     "updateUrl": "",

@@ -16,17 +16,26 @@ public class ModelSmallSnake extends ModelBase {
     public ModelRenderer Segment3;
     public ModelRenderer Segment4;
     public ModelRenderer Segment5;
+    public ModelRenderer Segment1_full;
+    public ModelRenderer Segment2_full;
+    public ModelRenderer Segment3_full;
+    public ModelRenderer Segment4_full;
+    public ModelRenderer Segment5_full;
+    public ModelRenderer Tail_full;
+
     public ModelRenderer Tail;
     public ModelRenderer[] segments;
+    public ModelRenderer[] segments_full;
     boolean shouldTongue;
     boolean headUp;
-
+    boolean isFull;
     public ModelSmallSnake() {
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.Segment3 = new ModelRenderer(this, 0, 7);
         this.Segment3.setRotationPoint(0.0F, 0.0F, 4.0F);
         this.Segment3.addBox(-1.5F, 0F, 0.0F, 3, 2, 4, 0.0F);
+
         this.Tail = new ModelRenderer(this, 0, 14);
         this.Tail.setRotationPoint(0.0F, 0.0F, 4.0F);
         this.Tail.addBox(-1.0F, 0, 0.0F, 2, 2, 4, 0.0F);
@@ -72,15 +81,50 @@ public class ModelSmallSnake extends ModelBase {
                 Segment4,
                 Segment5
         };
+        this.Tail_full = new ModelRenderer(this, 0, 14);
+        this.Tail_full.setRotationPoint(0.0F, 0.0F, 4.0F);
+        this.Tail_full.addBox(-1.0F, -1.0F, 0.0F, 2, 2, 4, 0.0F);
+        this.Segment4_full = new ModelRenderer(this, 14, 7);
+        this.Segment4_full.setRotationPoint(0.0F, 0.0F, 4.0F);
+        this.Segment4_full.addBox(-2.0F, -2.0F, 0.0F, 4, 3, 4, 0.0F);
+        this.Segment1_full = new ModelRenderer(this, 14, 7);
+        this.Segment1_full.setRotationPoint(0.0F, 0.0F, 2.0F);
+        this.Segment1_full.addBox(-2.0F, -2.0F, 0.0F, 4, 3, 4, 0.0F);
+        this.Segment2_full = new ModelRenderer(this, 14, 7);
+        this.Segment2_full.setRotationPoint(0.0F, 0.0F, 4.0F);
+        this.Segment2_full.addBox(-2.0F, -2.0F, 0.0F, 4, 3, 4, 0.0F);
+        this.Segment5_full = new ModelRenderer(this, 0, 7);
+        this.Segment5_full.setRotationPoint(0.0F, 0.0F, 4.0F);
+        this.Segment5_full.addBox(-1.5F, -1.0F, 0.0F, 3, 2, 4, 0.0F);
+        this.Segment3_full = new ModelRenderer(this, 14, 7);
+        this.Segment3_full.setRotationPoint(0.0F, 0.0F, 4.0F);
+        this.Segment3_full.addBox(-2.0F, -2.0F, 0.0F, 4, 3, 4, 0.0F);
+        this.Segment2_full.addChild(this.Segment3_full);
+        this.Segment5_full.addChild(this.Tail_full);
+        this.Segment3_full.addChild(this.Segment4_full);
+        this.Segment4_full.addChild(this.Segment5_full);
+        this.Segment1_full.addChild(this.Segment2_full);
+
+
+
+        this.unParent(Head,Segment1_full);
+        segments_full= new ModelRenderer[]{
+                Segment1_full,
+                Segment2_full,
+                Segment3_full,
+                Segment4_full,
+                Segment5_full
+        };
     }
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         GlStateManager.pushMatrix();
 
-        GlStateManager.scale(0.5,.5,.5);
-        GlStateManager.translate(0,23*f5,0);
-        this.Segment1.render(f5);
+        GlStateManager.scale(EntitySmallSnake.globalScale,EntitySmallSnake.globalScale,EntitySmallSnake.globalScale);
+        GlStateManager.translate(0,(-64*EntitySmallSnake.globalScale+55)*f5,0);
+
+        (isFull?this.Segment1_full:this.Segment1).render(f5);
         this.Head.render(f5);
         this.Body.render(f5);
         GlStateManager.popMatrix();
@@ -100,15 +144,16 @@ public class ModelSmallSnake extends ModelBase {
 
     }
 
+
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
         limbSwing*=4;
-
+        ModelRenderer[] segmentsArray = isFull?segments_full:segments;
         float snakeCurveSize = 1.25f;
         float snakeSlitherSpeed = .3f;
-        for(int i = 0;i<segments.length;i++){
-            segments[i].rotateAngleY=(float)(snakeCurveSize*Math.sin(i*Math.PI/2-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed+snakeCurveSize*i/Math.PI));
+        for(int i = 0;i<segmentsArray.length;i++){
+            segmentsArray[i].rotateAngleY=(float)(snakeCurveSize*Math.sin(i*Math.PI/2-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed+snakeCurveSize*i/Math.PI));
 
         }
         Head.offsetX=(float)(.05*Math.sin(snakeSlitherSpeed*limbSwing));
@@ -116,6 +161,7 @@ public class ModelSmallSnake extends ModelBase {
 
         Head.rotateAngleY = (float)(netHeadYaw*Math.PI/180f);
         Head.rotateAngleX = (float)(headPitch*Math.PI/180f);
+
         //Body.rotateAngleY=-Head.rotateAngleY;
         if(headUp){
             Head.offsetY=-.2f;
@@ -126,7 +172,7 @@ public class ModelSmallSnake extends ModelBase {
             Body.rotateAngleY=(float)(snakeCurveSize*Math.sin(-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed))/4;
         }
         else{
-            Body.rotateAngleY=(float)(snakeCurveSize*Math.sin(-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed))/4;
+            Body.rotateAngleY=(float)(snakeCurveSize*Math.sin(-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed))/3;
             Head.offsetY=0;
             Head.offsetZ=-.11f;
             Body.rotateAngleX=0;
@@ -143,6 +189,7 @@ public class ModelSmallSnake extends ModelBase {
         EntitySmallSnake entitylivingbaseIn1 = (EntitySmallSnake) entitylivingbaseIn;
         shouldTongue = entitylivingbaseIn1.shouldTongueFlick();
         headUp=entitylivingbaseIn1.getHeadUp();
+        isFull=entitylivingbaseIn1.getState()== EntitySmallSnake.State.FULL;
     }
 
     /**
