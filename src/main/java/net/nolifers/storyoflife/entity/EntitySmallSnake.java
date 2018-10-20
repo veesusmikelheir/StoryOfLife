@@ -28,6 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.nolifers.storyoflife.entity.ai.*;
+import net.nolifers.storyoflife.util.PathDebugger;
 
 import javax.annotation.Nullable;
 
@@ -386,6 +387,12 @@ public class EntitySmallSnake extends EntityCreature implements IFlee, IHungry {
         }
 
         @Override
+        protected void debugPathFinding() {
+            if(this.noPath()) return;
+            //PathDebugger.addPath(getPath());
+        }
+
+        @Override
         public void onUpdateNavigation() {
 
             ++this.totalTicks;
@@ -438,19 +445,6 @@ public class EntitySmallSnake extends EntityCreature implements IFlee, IHungry {
 
         }
 
-        public boolean fenceConnectedInDirection(IBlockState state, EnumFacing facing) {
-            switch (facing) {
-                case NORTH:
-                    return state.getValue(BlockFence.NORTH);
-                case EAST:
-                    return state.getValue(BlockFence.EAST);
-                case SOUTH:
-                    return state.getValue(BlockFence.SOUTH);
-                case WEST:
-                    return state.getValue(BlockFence.WEST);
-            }
-            return true;
-        }
         public PathNavigateFence(EntityLiving entitylivingIn, World worldIn) {
             super(entitylivingIn, worldIn);
         }
