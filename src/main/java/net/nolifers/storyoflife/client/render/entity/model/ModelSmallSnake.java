@@ -1,13 +1,12 @@
 package net.nolifers.storyoflife.client.render.entity.model;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.nolifers.storyoflife.entity.EntitySmallSnake;
 
-public class ModelSmallSnake extends ModelBase {
+public class ModelSmallSnake extends ModelSegmented {
     public ModelRenderer Head;
     public ModelRenderer Tounge;
     public ModelRenderer Body;
@@ -29,6 +28,7 @@ public class ModelSmallSnake extends ModelBase {
     boolean shouldTongue;
     boolean headUp;
     boolean isFull;
+
     public ModelSmallSnake() {
         this.textureWidth = 64;
         this.textureHeight = 32;
@@ -149,15 +149,9 @@ public class ModelSmallSnake extends ModelBase {
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
         limbSwing*=4;
-        ModelRenderer[] segmentsArray = isFull?segments_full:segments;
-        float snakeCurveSize = 1.25f;
-        float snakeSlitherSpeed = .3f;
-        for(int i = 0;i<segmentsArray.length;i++){
-            segmentsArray[i].rotateAngleY=(float)(snakeCurveSize*Math.sin(i*Math.PI/2-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed+snakeCurveSize*i/Math.PI));
-
-        }
-        Head.offsetX=(float)(.05*Math.sin(snakeSlitherSpeed*limbSwing));
-        Body.offsetX=(float)(.05*Math.sin(snakeSlitherSpeed*limbSwing));
+        animateSegments(limbSwing);
+        Head.offsetX=(float)(.05*Math.sin(getSlitherSpeed() *limbSwing));
+        Body.offsetX=(float)(.05*Math.sin(getSlitherSpeed() *limbSwing));
 
         Head.rotateAngleY = (float)(netHeadYaw*Math.PI/180f);
         Head.rotateAngleX = (float)(headPitch*Math.PI/180f);
@@ -169,10 +163,10 @@ public class ModelSmallSnake extends ModelBase {
             Body.offsetY=-.08f;
             Body.offsetZ=.1f;
             Head.offsetZ=.035f;
-            Body.rotateAngleY=(float)(snakeCurveSize*Math.sin(-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed))/4;
+            Body.rotateAngleY=(float)(getSlitherCurveSize() *Math.sin(-getSlitherCurveSize() /2)*Math.sin(limbSwing* getSlitherSpeed()))/4;
         }
         else{
-            Body.rotateAngleY=(float)(snakeCurveSize*Math.sin(-snakeCurveSize/2)*Math.sin(limbSwing*snakeSlitherSpeed))/3;
+            Body.rotateAngleY=(float)(getSlitherCurveSize() *Math.sin(-getSlitherCurveSize() /2)*Math.sin(limbSwing* getSlitherSpeed()))/3;
             Head.offsetY=0;
             Head.offsetZ=-.11f;
             Body.rotateAngleX=0;
@@ -181,6 +175,11 @@ public class ModelSmallSnake extends ModelBase {
         }
 
         Tounge.rotateAngleX=(float)(.3*Math.cos(ageInTicks*1.3));
+    }
+
+    @Override
+    protected ModelRenderer[] getSegments() {
+        return isFull?segments_full:segments;
     }
 
     @Override
