@@ -22,7 +22,8 @@ public class EntityAIAvoidPlayers extends EntityAIAvoidEntity {
 
     @Override
     public boolean shouldExecute() {
-        this.closestLivingEntity = in.world.getClosestPlayerToEntity(in,avoidDist*2);
+        this.closestLivingEntity = in.world.getNearestPlayerNotCreative(in,avoidDist*2);
+
         if(this.closestLivingEntity==null) return false;
         if(this.closestLivingEntity.equals(in.getAttackTarget())) return false;
         Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, 16, 7, new Vec3d(this.closestLivingEntity.posX, this.closestLivingEntity.posY, this.closestLivingEntity.posZ));
