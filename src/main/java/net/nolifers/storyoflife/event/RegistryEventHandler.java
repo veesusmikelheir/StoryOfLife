@@ -1,6 +1,7 @@
 package net.nolifers.storyoflife.event;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.audio.Sound;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
@@ -20,6 +21,7 @@ import net.nolifers.storyoflife.StoryofLife;
 import net.nolifers.storyoflife.entity.EntityJellyfish;
 import net.nolifers.storyoflife.entity.EntitySmallSnake;
 import net.nolifers.storyoflife.entity.EntityWildebeest;
+import net.nolifers.storyoflife.init.ModSounds;
 
 /**
  * This is a special class that listens to registry events, to allow creation of mod blocks and items at the proper time.
@@ -85,11 +87,20 @@ public class RegistryEventHandler {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void missingMappingsSounds(RegistryEvent.MissingMappings<SoundEvent> event){
+        for(RegistryEvent.MissingMappings.Mapping mapping : event.getMappings()){
+            if(mapping.key.toString().equals("storyoflife:wildebeast_ambient")){
+                mapping.remap(ModSounds.WILDEBEEST_AMBIENT);
+            }
+        }
+    }
     @SubscribeEvent
     public static void addSounds(RegistryEvent.Register<SoundEvent> event){
 
         ForgeRegistries.SOUND_EVENTS.registerAll(
-            createSoundEvent("wildebeast_ambient")
+            createSoundEvent("wildebeest_ambient")
         );
     }
 
