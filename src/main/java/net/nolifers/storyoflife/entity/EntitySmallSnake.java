@@ -50,6 +50,7 @@ public class EntitySmallSnake extends EntityCreature implements IFlee, IHungry {
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.2D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2D);
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8D);
     }
 
     public EntitySmallSnake(World worldIn) {
