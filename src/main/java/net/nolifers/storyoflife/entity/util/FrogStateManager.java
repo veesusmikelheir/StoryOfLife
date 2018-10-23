@@ -1,5 +1,6 @@
 package net.nolifers.storyoflife.entity.util;
 
+import net.minecraft.util.math.Vec3d;
 import net.nolifers.storyoflife.entity.EntityFrog;
 
 public class FrogStateManager {
@@ -9,6 +10,7 @@ public class FrogStateManager {
     float frogSwimFactor;
     float prevFrogSwimFactor;
     EntityFrog.FrogState cachedState;
+    Vec3d trueMotion;
     public FrogStateManager(EntityFrog frog){
         this.frog=frog;
     }
@@ -19,7 +21,12 @@ public class FrogStateManager {
 
     public void onUpdate(){
         updateFrogState();
+        updateTrueMotion();
         processFrogState(this.getFrogState());
+    }
+
+    public void updateTrueMotion(){
+        trueMotion = new Vec3d(frog.posX-frog.prevPosX,frog.posY-frog.prevPosY,frog.posZ-frog.prevPosZ);
     }
 
     public void updateFrogState(){
@@ -45,24 +52,22 @@ public class FrogStateManager {
 
 
     public void processFrogState(EntityFrog.FrogState state){
-        onSwimming();
-
         switch(state){
             case STANDING:
-                //onStanding();
+                onStanding();
                 break;
             case JUMPING:
-                //onJumping();
+                onJumping();
                 break;
             case SWIMMING:
-                //onSwimming();
+                onSwimming();
                 break;
         }
     }
 
     public void onSwimming(){
         setFrogPitch(0);
-        double motionXZ = Math.sqrt(frog.motionZ*frog.motionZ+frog.motionX*frog.motionX);
+        double motionXZ = Math.sqrt(trueMotion.x*trueMotion.x+trueMotion.z*trueMotion.z);
         setFrogSwimFactor((float)motionXZ/frog.getSwimSpeed());
     }
 
@@ -72,13 +77,11 @@ public class FrogStateManager {
     }
 
     public void onJumping(){
-
-        prevFrogPitch=frogPitch;
-        double motionXZ = Math.sqrt(frog.motionZ*frog.motionZ+frog.motionX*frog.motionX);
+        double motionXZ = Math.sqrt(trueMotion.x*trueMotion.x+trueMotion.z*trueMotion.z);
 
 
 
-        double angle = (180/Math.PI)*Math.atan2(frog.motionY,motionXZ);
+        double angle = (180/Math.PI)*Math.atan2(trueMotion.y,motionXZ);
 
         setFrogPitch((float)angle);
 
@@ -110,9 +113,8 @@ public class FrogStateManager {
     }
 
     public EntityFrog.FrogState getFrogState(){
-        return EntityFrog.FrogState.SWIMMING;
-        //if(cachedState==null) cachedState = frog.getState();
-        //return cachedState;
+        if(cachedState==null) cachedState = frog.getState();
+        return cachedState;
     }
 
     public void setFrogState(EntityFrog.FrogState state){
