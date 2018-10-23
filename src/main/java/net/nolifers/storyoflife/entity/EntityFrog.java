@@ -3,6 +3,7 @@ package net.nolifers.storyoflife.entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -44,6 +45,18 @@ public class EntityFrog extends EntityCreature {
         if(key.equals(STATE)){
             stateManager.notifyStateChange(FrogState.fromByteID(dataManager.get(STATE)));
         }
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setByte("Variant",getStateManager().getFrogState().getByteID());
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        getStateManager().setFrogState(FrogState.fromByteID(compound.getByte("Variant")));
     }
 
     @Override
