@@ -4,7 +4,9 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
+import net.nolifers.storyoflife.entity.EntityFrog;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -24,6 +26,7 @@ public class ModelFrog extends ModelBase {
     public ModelRenderer Feet;
     public ModelRenderer Feet_1;
     private final float DEGTORAD = (float)Math.PI/180f;
+    private float swimMultiplier;
 
     public ModelFrog() {
         this.textureWidth = 64;
@@ -87,16 +90,70 @@ public class ModelFrog extends ModelBase {
     }
 
     @Override
+    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        super.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTickTime);
+        swimMultiplier = ((EntityFrog)entitylivingbaseIn).getStateManager().getInterpolatedFrogSwimFactor(partialTickTime);
+    }
+
+    @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-        this.Head.rotateAngleY=netHeadYaw* DEGTORAD;
-        this.Head.rotateAngleX=headPitch* DEGTORAD;
+        this.Head.rotateAngleY=netHeadYaw * DEGTORAD;
+        this.Head.rotateAngleX=headPitch * DEGTORAD;
+
+        EntityFrog frog = (EntityFrog)entityIn;
+        EntityFrog.FrogState state = frog.getStateManager().getFrogState();
         float angle = calculateAnimation(limbSwing,limbSwingAmount,.5f);
+
+        float swimAngle = swimMultiplier;
+        swimAngle=(swimAngle*swimAngle*swimAngle*2-1)*.25f+1.5f;
+        doSwim(state== EntityFrog.FrogState.SWIMMING);
+        switch(state){
+            case STANDING:
+
+                setLegAndArmAnglesStanding(angle);
+                break;
+            case JUMPING:
+                setLegAndArmAnglesAnimated((float)Math.PI/2.2f*Math.abs(.1f+.9f*frog.getStateManager().getFrogPitch()/90f),.5f);
+                break;
+            case SWIMMING:
+                setLegAndArmAnglesSwimming(swimAngle);
+        }
+
+    }
+
+    protected void doSwim(boolean isSwimming){
+        if(isSwimming){
+            this.RightLeg.rotateAngleZ=(float)Math.PI/2;
+            this.LeftLeg.rotateAngleZ=-(float)Math.PI/2;
+            this.LeftArm.rotateAngleZ=-(float)Math.PI/2;
+            this.RightArm.rotateAngleZ=(float)Math.PI/2;
+        }
+        else{
+            this.RightLeg.rotateAngleZ=0;
+            this.LeftLeg.rotateAngleZ=0;
+            this.LeftArm.rotateAngleZ=0;
+            this.RightArm.rotateAngleZ=0;
+        }
+    }
+
+    protected void setLegAndArmAnglesStanding(float angle) {
         this.RightLeg.rotateAngleX=angle;
         this.LeftLeg.rotateAngleX=angle;
         this.LeftArm.rotateAngleX=-angle;
         this.RightArm.rotateAngleX=-angle;
     }
-
+    protected void setLegAndArmAnglesSwimming(float angle) {
+        this.RightLeg.rotateAngleX=angle;
+        this.LeftLeg.rotateAngleX=angle;
+        this.LeftArm.rotateAngleX=angle*2-3;
+        this.RightArm.rotateAngleX=angle*2-3;
+    }
+    protected void setLegAndArmAnglesAnimated(float angle,float speed) {
+        this.RightLeg.rotateAngleX+=(angle-this.RightLeg.rotateAngleX)*speed;
+        this.LeftLeg.rotateAngleX+=(angle-this.LeftLeg.rotateAngleX)*speed;
+        this.LeftArm.rotateAngleX+=(-angle-this.LeftArm.rotateAngleX)*speed;
+        this.RightArm.rotateAngleX+=(-angle-this.RightArm.rotateAngleX)*speed;
+    }
 
     public float calculateAnimation(float limbSwing, float limbSwingAmount,float animSpeed){
         return MathHelper.cos(limbSwing*animSpeed)*limbSwingAmount;

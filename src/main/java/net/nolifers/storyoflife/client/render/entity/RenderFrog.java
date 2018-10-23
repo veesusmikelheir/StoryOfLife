@@ -1,6 +1,7 @@
 package net.nolifers.storyoflife.client.render.entity;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
@@ -23,6 +24,13 @@ public class RenderFrog extends RenderLiving<EntityFrog> {
     protected ResourceLocation getEntityTexture(EntityFrog entity) {
         return new ResourceLocation(StoryofLife.MOD_ID,"textures/entity/frog/frog_"+entity.getVariant()+".png");
     }
+
+    @Override
+    protected void applyRotations(EntityFrog entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
+        GlStateManager.rotate(entityLiving.getStateManager().getInterpolatedFrogPitch(partialTicks),1,0,0);
+    }
+
     public static class Factory implements IRenderFactory<EntityFrog> {
 
         @Override
