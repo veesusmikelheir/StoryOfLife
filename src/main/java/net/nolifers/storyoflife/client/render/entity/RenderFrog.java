@@ -28,7 +28,7 @@ public class RenderFrog extends RenderLiving<EntityFrog> {
     @Override
     protected void applyRotations(EntityFrog entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
-        GlStateManager.rotate(entityLiving.getStateManager().getInterpolatedFrogPitch(partialTicks),1,0,0);
+        GlStateManager.rotate(entityLiving.getStateManager().getInterpolatedFrogPitch(partialTicks)/2f  ,1,0,0);
     }
 
     public static class Factory implements IRenderFactory<EntityFrog> {

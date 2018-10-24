@@ -11,6 +11,8 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.nolifers.storyoflife.StoryofLife;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class PathDebugger {
         pathsToDebug.remove(path);
     }
 
+    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public static void renderEvent(RenderWorldLastEvent event){
         EntityPlayerSP player = Minecraft.getMinecraft().player;

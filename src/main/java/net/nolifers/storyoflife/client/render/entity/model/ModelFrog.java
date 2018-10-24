@@ -113,7 +113,7 @@ public class ModelFrog extends ModelBase {
                 setLegAndArmAnglesStanding(angle);
                 break;
             case JUMPING:
-                setLegAndArmAnglesAnimated((float)Math.PI/2.2f*Math.abs(.1f+.9f*frog.getStateManager().getFrogPitch()/90f),.5f);
+                setLegAndArmAnglesStanding((float)Math.PI/2.2f*Math.min(1,Math.abs(.3f+1.15f*frog.getStateManager().getFrogPitch()/90f)));
                 break;
             case SWIMMING:
                 setLegAndArmAnglesSwimming(swimAngle);

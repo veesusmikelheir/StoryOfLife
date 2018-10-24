@@ -1,5 +1,6 @@
 package net.nolifers.storyoflife.entity;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -7,13 +8,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.nolifers.storyoflife.entity.util.FrogStateManager;
+import net.nolifers.storyoflife.entity.util.IMotionPathFollower;
+import net.nolifers.storyoflife.entity.util.MotionPathHelper;
 
 import javax.annotation.Nullable;
 
-public class EntityFrog extends EntityCreature {
+public class EntityFrog extends EntityCreature implements IMotionPathFollower {
 
     public static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(EntityFrog.class, DataSerializers.BYTE);
     public static final DataParameter<Byte> STATE = EntityDataManager.createKey(EntityFrog.class,DataSerializers.BYTE);
@@ -21,15 +26,32 @@ public class EntityFrog extends EntityCreature {
 
     FrogStateManager stateManager;
 
+    MotionPathHelper motionPathHelper;
+    int number;
     @Override
     public void onUpdate() {
         super.onUpdate();
+        motionPathHelper.onUpdate();
         stateManager.onUpdate();
+
+        checkIfShouldDisturbPath();
+        if(motionPathHelper.noPath()&&number<20){
+            motionPathHelper.pathToPos(getPositionVector().add(new Vec3d(2   ,0,0)));
+            number++;
+        }
+
+    }
+
+    public void checkIfShouldDisturbPath(){
+        if(this.collidedHorizontally){
+            motionPathHelper.disturbPath();
+        }
     }
 
     public EntityFrog(World worldIn) {
         super(worldIn);
         stateManager = new FrogStateManager(this);
+        motionPathHelper = new MotionPathHelper(this);
         setSize(.3f,.3f);
     }
 
@@ -45,6 +67,18 @@ public class EntityFrog extends EntityCreature {
         if(key.equals(STATE)){
             stateManager.notifyStateChange(FrogState.fromByteID(dataManager.get(STATE)));
         }
+    }
+
+    @Override
+    protected void collideWithEntity(Entity entityIn) {
+        motionPathHelper.disturbPath();
+        super.collideWithEntity(entityIn);
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        motionPathHelper.disturbPath();
+        return super.attackEntityFrom(source, amount);
     }
 
     @Override
@@ -96,6 +130,16 @@ public class EntityFrog extends EntityCreature {
         setVariant(rand.nextInt(VARIANT_COUNT));
         return super.onInitialSpawn(difficulty, livingdata);
 
+    }
+
+    @Override
+    public MotionPathHelper getMotionPathHelper() {
+        return motionPathHelper;
+    }
+
+    @Override
+    public EntityCreature getEntity() {
+        return this;
     }
 
     public enum FrogState{
