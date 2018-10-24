@@ -35,6 +35,7 @@ public class PathDebugger {
     public static void removePath(Path path){
         pathsToDebug.remove(path);
     }
+
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public static void renderEvent(RenderWorldLastEvent event){
