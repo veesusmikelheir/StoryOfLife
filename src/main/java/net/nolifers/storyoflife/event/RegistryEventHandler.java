@@ -18,10 +18,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.nolifers.storyoflife.StoryofLife;
-import net.nolifers.storyoflife.entity.EntityFrog;
-import net.nolifers.storyoflife.entity.EntityJellyfish;
-import net.nolifers.storyoflife.entity.EntitySmallSnake;
-import net.nolifers.storyoflife.entity.EntityWildebeest;
+import net.nolifers.storyoflife.entity.*;
 import net.nolifers.storyoflife.init.ModSounds;
 
 /**
@@ -79,9 +76,17 @@ public class RegistryEventHandler {
                         .entity(EntityFrog.class)
                         .id(new ResourceLocation(StoryofLife.MOD_ID,"frog"),EntityID++)
                         .name(StoryofLife.MOD_ID+".frog")
-                        .tracker(48,3,true)
+                        .tracker(48,2,true)
                         .egg(0,0)
-                        .build()
+                        .build(),
+                EntityEntryBuilder.create().
+                entity(EntityThornyLizard.class)
+                .id(new ResourceLocation(StoryofLife.MOD_ID,"thornylizard"),EntityID++)
+                .name(StoryofLife.MOD_ID+".thornylizard")
+                .tracker(48,3,true)
+                .egg(0,0)
+                .spawn(EnumCreatureType.CREATURE,4,2,4,Biomes.DESERT,Biomes.DESERT_HILLS,Biomes.MUTATED_DESERT)
+                .build()
         );
         EntitySpawnPlacementRegistry.setPlacementType(EntityJellyfish.class, EntityLiving.SpawnPlacementType.IN_WATER);
     }

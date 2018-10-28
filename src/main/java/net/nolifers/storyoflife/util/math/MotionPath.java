@@ -1,11 +1,14 @@
 package net.nolifers.storyoflife.util.math;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.Vec3d;
 
 public abstract class MotionPath {
     protected Vec3d startPos;
     protected Vec3d targetPos;
     protected double initialSpeed;
+
+    public MotionPath(){}
 
     public MotionPath(Vec3d startpos,Vec3d targpos,double speed){
         startPos=startpos;

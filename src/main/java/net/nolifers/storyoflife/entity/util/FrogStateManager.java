@@ -12,8 +12,11 @@ public class FrogStateManager {
     EntityFrog.FrogState cachedState;
     Vec3d trueMotion;
 
+    public float frogYaw;
+
     public FrogStateManager(EntityFrog frog) {
         this.frog = frog;
+        this.frogYaw = frog.rotationYaw;
     }
 
     public void notifyStateChange(EntityFrog.FrogState newState) {
@@ -24,6 +27,7 @@ public class FrogStateManager {
         updateFrogState();
         updateTrueMotion();
         processFrogState(this.getFrogState());
+        frog.rotationYaw=frogYaw;
     }
 
     public void updateTrueMotion() {
@@ -31,8 +35,6 @@ public class FrogStateManager {
     }
 
     public void updateFrogState() {
-        setFrogState(EntityFrog.FrogState.JUMPING);
-        if(1==1) return;
         if (shouldSwim())
             setFrogState(EntityFrog.FrogState.SWIMMING);
         else if (shouldStand())
@@ -52,7 +54,7 @@ public class FrogStateManager {
     }
 
     public boolean shouldJump() {
-        return frog.getIsJumping();
+        return !frog.onGround;
     }
 
 
@@ -86,7 +88,7 @@ public class FrogStateManager {
         double motionXZ = Math.sqrt(trueMotion.x * trueMotion.x + trueMotion.z * trueMotion.z);
         double angle = (180 / Math.PI) * Math.atan2(trueMotion.y, motionXZ);
         double yawAngle = (180 / Math.PI) * Math.atan2(trueMotion.z, trueMotion.x)+90;
-        frog.rotationYaw=(float)-yawAngle;
+        frogYaw=(float)-yawAngle;
         MotionPathHelper motionPathHelper = frog.getMotionPathHelper();
         float pitchMultiplier = motionPathHelper.noPath()?1:(float)(motionPathHelper.solver.getLateralDistance(motionPathHelper.path.getStartPos(),motionPathHelper.path.getTargetPos())/2f);
         setFrogPitch((float) angle*(pitchMultiplier));
